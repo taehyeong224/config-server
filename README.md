@@ -1,2 +1,2 @@
-# config-server
-config-server
+# inversifyjs-template
+inversifyjs-template
