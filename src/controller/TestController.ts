@@ -4,7 +4,6 @@ import { TestService } from '../service/TestService';
 import * as express from 'express';
 import TYPES from '../constant/types';
 import { errorHandle } from "../util/util";
-// import { checkContentType } from "../middleware/contentType";
 import { checkToken } from "../middleware/token";
 
 @controller('/')
@@ -13,10 +12,10 @@ export class TestController {
     constructor(@inject(TYPES.TestService) private testService: TestService) {}
 
     @httpGet('/')
-    public someGet(request: express.Request, response: express.Response) {
+    public async someGet(request: express.Request, response: express.Response) {
         try {
-            this.testService.getTestByIdx(1);
-            response.status(200).json({ msg: "success" });
+            const data = await this.testService.getData();
+            response.status(200).json({ msg: "success" , data});
         } catch (e) {
             errorHandle(e, response)
         }

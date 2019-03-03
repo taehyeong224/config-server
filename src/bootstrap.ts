@@ -8,6 +8,9 @@ import TYPES from './constant/types';
 import './controller/TestController';
 import { Request, Response, NextFunction } from "express";
 import { TestService } from './service/TestService';
+import { client } from './config/redis';
+import * as fs from "fs";
+
 let container = new Container();
 container.bind<TestService>(TYPES.TestService).to(TestService).inRequestScope();
 
@@ -28,3 +31,11 @@ server.setConfig((app) => {
 });
 let serverInstance = server.build();
 serverInstance.listen(3000);
+client.on("error", function (err) {
+    console.log("Error " + err);
+});
+const path = __dirname + "/../config.json";
+console.log("path : ", path);
+const data = JSON.parse(fs.readFileSync(path, "utf8"))
+client.set("data", JSON.stringify(data))
+console.log("complete")

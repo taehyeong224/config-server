@@ -1,2 +1,3 @@
-# inversifyjs-template
-inversifyjs-template
+# requirement
+
+redis
